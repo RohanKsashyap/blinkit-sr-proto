@@ -151,7 +151,7 @@ function App() {
                 onClick={() => setIsAuthOpen(true)}
               >
                 <User size={24} />
-                <span>{isLoggedIn ? 'Account' : 'Login'}</span>
+                <span>{isLoggedIn ? 'Account' : 'Sign up'}</span>
               </button>
             </div>
           </div>
