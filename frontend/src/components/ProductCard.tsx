@@ -1,5 +1,6 @@
 import React from 'react';
 import { Minus, Plus } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface ProductCardProps {
   id: number;
@@ -64,12 +65,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         {inStock && (
           quantity === 0 ? (
+            <Link to={'/product/:id'}>
             <button 
               className="bg-green-500 text-white px-4 py-1 rounded-lg hover:bg-green-600 transition-colors"
               onClick={onAddToCart}
             >
               Add
             </button>
+            </Link>
           ) : (
             <div className="flex items-center space-x-2">
               <button 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Mail, Lock,User, Phone } from 'lucide-react';
+import axios from 'axios';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -16,13 +17,42 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLogin }) => {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit =  async(e: React.FormEvent) => {
+    e.preventDefault()
+try {
+const response = await axios.post('http://localhost:5000/api/user',
+  {
+    name,
+    email,
+    phone,
+    password
+
+  },
+  
+  {
+  
+headers:{
+  "Content-Type": "application/json"
+
+}
+
+})
+console.log(response.data)
+
+
+
     onLogin();
     setEmail('');
     setName('')
     setPassword('')
     setPhone('');
+  
+} catch (error) {
+  console.log("error sending data ",error)
+  
+}
+
+    
   };
 
   return (
@@ -51,9 +81,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLogin }) => {
               </label>
               <div className="relative">
                 <input
-                  type="email"
+                  type="name"
                   value={name}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                   placeholder="Enter your fullname"
                   required
@@ -70,9 +100,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLogin }) => {
               </label>
               <div className="relative">
                 <input
-                  type="phone"
+                  type="number"
                   value={phone}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setPhone(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                   placeholder="Enter your contact"
                   required
@@ -90,7 +120,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLogin }) => {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(f) => setEmail(f.target.value)}
                   className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                   placeholder="Enter your email"
                   required
@@ -212,9 +242,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLogin }) => {
       </div>
     </div>}
 
-    
-
-    </>
+ </>
   );
 };
 
